@@ -2,6 +2,7 @@ const fs = require('fs')
 var express = require('express')
 var bodyParser = require('body-parser')
 var path = require('path')
+var compression = require('compression')
 // 路由加载
 var mount = require('mount-routes')
 
@@ -15,7 +16,8 @@ var app = express()
  */
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
+app.use(compression())
+app.use('/',express.static('./public/dist'))
 // 初始化数据库模块
 var database = require('./modules/database')
 database.initialize(app, function(err) {
